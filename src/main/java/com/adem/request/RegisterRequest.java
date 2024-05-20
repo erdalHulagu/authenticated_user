@@ -56,7 +56,5 @@ public class RegisterRequest {
     private LocalDateTime updateAt;
 
 
-    private  Set<Role> roles = new HashSet<>();
-
 
 }
