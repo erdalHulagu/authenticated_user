@@ -55,8 +55,8 @@ private String lastName;
 private String email;
 
 
-@Size(min = 10, max = 80)
-@Column(length = 80, nullable = false, unique=true)
+@Size(min = 4, max = 80)
+@Column(length = 150, nullable = false, unique=true)
 private String password;
 
 @Size(max= 100)
@@ -69,8 +69,9 @@ message = "Please provide valid phone number" )
 @Column(nullable = true) 
 private String phone;
 
-@UpdateTimestamp
+
 @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+@Column(name = "upadate_at", updatable = true, nullable = true)
 private LocalDateTime updateAt;
 
 

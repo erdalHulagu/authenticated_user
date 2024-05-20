@@ -20,6 +20,7 @@ import com.adem.DTO.UserDTO;
 import com.adem.DTOresponse.Response;
 import com.adem.DTOresponse.ResponseMessage;
 import com.adem.domain.User;
+import com.adem.request.UpdateUserRequest;
 import com.adem.service.UserService;
 
 
@@ -63,10 +64,10 @@ public class UserController {
 		return ResponseEntity.ok(usersDTO);
 		
 	}
-	@PutMapping("/auth")
-	public ResponseEntity<Response> upDateUser(@Validated @RequestBody UserDTO userDTO){
-		User user=userService.getCurrentUser();
-		 userService.updateUser(user,userDTO);
+	@PutMapping("/auth/update")
+	public ResponseEntity<Response> upDateUser(@Validated @RequestBody UpdateUserRequest updateUserRequest){
+		
+		 userService.updateUser(updateUserRequest);
 		 
 		 
 		 Response response = new Response();

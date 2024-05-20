@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import com.adem.exception.message.ErrorMessage;
 import com.adem.mapper.UserMapper;
 import com.adem.repository.UserRepository;
 import com.adem.request.RegisterRequest;
+import com.adem.request.UpdateUserRequest;
 import com.adem.security.config.SecurityUtils;
 import com.adem.security.jwt.JwtUtils;
 
@@ -32,8 +34,10 @@ public class UserService {
 	private PasswordEncoder passwordEncoder;
 
 	private JwtUtils jwtUtils;
+	
+	private UserService userService;
 
-	public UserService(UserRepository userRepository,UserMapper userMapper,
+	public UserService(UserRepository userRepository,UserMapper userMapper, @Lazy UserService userService,
 			RoleService roleService, PasswordEncoder passwordEncoder, JwtUtils jwtUtils) {
 
 		this.userRepository = userRepository;
@@ -41,6 +45,8 @@ public class UserService {
 		this.roleService = roleService;
 		this.passwordEncoder = passwordEncoder;
 		this.jwtUtils = jwtUtils;
+		this.userService = userService;
+		
 
 	}
 
@@ -108,8 +114,9 @@ public class UserService {
 		return userDTOList;
 	}
 
-	// update user
-	public void updateUser(User user,UserDTO userDTO) {
+	//--------------update user-------------------
+	public void updateUser(UpdateUserRequest updateUserRequest) {
+		User user=userService.getCurrentUser();
 
 		if ((user == null)) {
 			new ResourceNotFoundException(String.format(ErrorMessage.EMAIL_IS_NOT_MATCH));
@@ -118,15 +125,18 @@ public class UserService {
 		Role role = roleService.findByType(RoleType.ROLE_ANONYMOUS);
 
 		Set<Role> roles = new HashSet<>();
+		
+		String encodedPassword = passwordEncoder.encode(updateUserRequest.getPassword());
+		
 		roles.add(role);
 		user.setRoles(roles);
-
-
 		user.setUpdateAt(LocalDateTime.now());
-		user.setAddress(userDTO.getAddress());
-		user.setFirstName(userDTO.getFirstName());
-		user.setLastName(userDTO.getLastName());
-		user.setPhone(userDTO.getPhone());
+		user.setAddress(updateUserRequest.getAddress());
+		user.setFirstName(updateUserRequest.getFirstName());
+		user.setLastName(updateUserRequest.getLastName());
+		user.setPhone(updateUserRequest.getPhone());
+		user.setPassword(encodedPassword);
+		userRepository.save(user);
 
 	}
 
