@@ -53,13 +53,10 @@ public class UserController {
 
 	}
 
-	@GetMapping("/admin")
+	@GetMapping("/all")
 	public ResponseEntity<List<UserDTO>>getAllUser(){
-   
 
-		
 		List<UserDTO> usersDTO = userService.getAllUsers();
-		
 
 		return ResponseEntity.ok(usersDTO);
 		

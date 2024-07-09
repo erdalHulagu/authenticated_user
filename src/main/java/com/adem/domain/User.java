@@ -88,7 +88,16 @@ private boolean builtIn;
 						 inverseJoinColumns = @JoinColumn(name="role_id"))
 private  Set<Role> roles = new HashSet<>();
 
+@Column
+private Boolean isAdmin;
 
+
+@Column
+@ManyToMany
+@JoinTable( name="t_user_role",
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name="book_id"))
+private Set<Book> books;
 
 }
 

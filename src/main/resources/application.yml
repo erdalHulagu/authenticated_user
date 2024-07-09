@@ -9,8 +9,8 @@ spring:
  main:
   allow-circular-references: true
  datasource:
-  url: jdbc:postgresql://localhost:5432/greenRent_db
-  username: postgres
+  url: jdbc:postgresql://localhost:5432/library_db
+  username: library
   password: password
   driver-class-name: org.postgresql.Driver
  jpa:

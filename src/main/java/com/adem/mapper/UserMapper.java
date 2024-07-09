@@ -24,7 +24,6 @@ public interface UserMapper  {
 	@Mapping(target = "id", ignore=true)
 	@Mapping(target = "updateAt",ignore = true)
 	@Mapping(target = "roles",ignore = true)
-	
 	User userDTOToUser(UserDTO userDTO);
 	
 	

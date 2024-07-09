@@ -1,6 +1,5 @@
 package com.adem.DTO;
 
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,8 +17,6 @@ import lombok.Setter;
 
 public class UserDTO {
 
-private Long id;
-
 private String firstName;
 
 private String lastName;
@@ -28,11 +25,7 @@ private String email;
 
 private String password;
 
-private  LocalDateTime updateAt;
-
 private String phone;
-
-private LocalDateTime createAt;
 
 private String address;
 
