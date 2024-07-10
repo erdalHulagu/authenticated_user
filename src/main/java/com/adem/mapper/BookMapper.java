@@ -10,7 +10,7 @@ import org.mapstruct.Named;
 
 import com.adem.DTO.BookDTO;
 import com.adem.domain.Book;
-import com.adem.domain.Image;
+import com.adem.domain.ImageData;
 
 @Mapper(componentModel = "spring")
 public interface BookMapper {
@@ -28,7 +28,7 @@ public interface BookMapper {
 	
 	
 	@Named("getImageAsString")
-	public static  Set<String> getImageIds( Set<Image> imageFiles) {
+	public static  Set<String> getImageIds( Set<ImageData> imageFiles) {
 		Set<String> imgs = new HashSet<>();
 		imgs = imageFiles.stream().map(imFile->imFile.getId().
 																toString()).

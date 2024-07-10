@@ -4,10 +4,10 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.adem.domain.ImageData;
+import com.adem.domain.ImageFile;
 
 
 
-public interface ImageDataRepository extends JpaRepository<ImageData, Long>{
-	Optional<ImageData> findById(Long id);
+public interface ImageDataRepository extends JpaRepository<ImageFile, Long>{
+	Optional<ImageFile> findById(Long id);
 }

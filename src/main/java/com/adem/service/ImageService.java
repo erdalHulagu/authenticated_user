@@ -10,8 +10,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.adem.DTO.ImageDTO;
 import com.adem.DTOresponse.Response;
 import com.adem.DTOresponse.ResponseMessage;
-import com.adem.domain.Image;
 import com.adem.domain.ImageData;
+import com.adem.domain.ImageFile;
 import com.adem.exception.ResourceNotFoundException;
 import com.adem.exception.message.ErrorMessage;
 import com.adem.repository.ImageDataRepository;
@@ -43,13 +43,13 @@ public class ImageService {
 		public String uploadImage(MultipartFile file) throws IOException {
 
 
-			Image image = null;
+			ImageData image = null;
 			// name kısımı
 			String fileName= StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 			
 			try {
-				ImageData imData= new ImageData(file.getBytes());
-				image = new Image(fileName, file.getContentType(), imData);
+				ImageFile imData= new ImageFile(file.getBytes());
+				image = new ImageData(fileName, file.getContentType(), imData);
 				
 			} catch (IOException e) {
 				throw new RuntimeException(e.getMessage());
@@ -72,13 +72,13 @@ public class ImageService {
 //    }
 //--------------------------------------------------------------------------------------------
     public void removeById(String id) {
-    	Image image =  getImageById(id);
+    	ImageData image =  getImageById(id);
 		 imageRepository.delete(image);
 	}
   //--------------------------------------------------------------------------------------------
     
-	public Image getImageById(String id) {
-		Image image= imageRepository.findById(id).orElseThrow(()->
+	public ImageData getImageById(String id) {
+		ImageData image= imageRepository.findById(id).orElseThrow(()->
                                 new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE,true)));
 
 		return image;
@@ -91,7 +91,7 @@ public class ImageService {
     public String uploadImageToFileSystem(MultipartFile file) throws IOException {
         String filePath=folder_path+file.getOriginalFilename();
 
-        Image image=imageRepository.save(Image.builder()
+        ImageData image=imageRepository.save(ImageData.builder()
                 .name(file.getOriginalFilename())
                 .type(file.getContentType())
                 .filePath(filePath).build());
@@ -105,7 +105,7 @@ public class ImageService {
     }
 //------------------------------------------------------------------------------------------------
     public byte[] downloadImageFromFileSystem(String id) throws IOException {
-        Optional<Image> fileData = imageRepository.findImageById(id);
+        Optional<ImageData> fileData = imageRepository.findImageById(id);
         String filePath=fileData.get().getFilePath();
         byte[] images = Files.readAllBytes(new File(filePath).toPath());
         return images;
@@ -114,7 +114,7 @@ public class ImageService {
 	
   	public List<ImageDTO> getAllImages() {
   		
-  		List<Image > images =  imageRepository.findAll();
+  		List<ImageData > images =  imageRepository.findAll();
   		
   		 List<ImageDTO> imageDTOs =images.stream().map(imFile->{
   			//URI oluşturmamız gerekiyor

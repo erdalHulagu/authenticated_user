@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.adem.DTO.BookDTO;
 import com.adem.domain.Book;
-import com.adem.domain.Image;
+import com.adem.domain.ImageData;
 import com.adem.domain.User;
 import com.adem.exception.ResourceNotFoundException;
 import com.adem.exception.message.ErrorMessage;
@@ -34,13 +34,23 @@ public class BookService {
 	@Autowired
 	private UserRepository userRepository;
 
+	public BookService(BookRepository bookRepository, ImageService imageService, BookMapper bookMapper,
+			UserService userService, UserRepository userRepository) {
+		
+		this.bookRepository = bookRepository;
+		this.imageService = imageService;
+		this.bookMapper = bookMapper;
+		this.userService = userService;
+		this.userRepository = userRepository;
+	}
+
 	public void createBookByUser(String imageId, BookDTO bookDTO) {
 
 		User currentUser = userService.getCurrentUser();
 
-		Image image = imageService.getImageById(imageId);
+		ImageData image = imageService.getImageById(imageId);
 
-		Set<Image> images = new HashSet<>();
+		Set<ImageData> images = new HashSet<>();
 
 		images.add(image);
 

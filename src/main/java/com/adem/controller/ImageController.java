@@ -11,7 +11,7 @@ import com.adem.DTO.ImageDTO;
 import com.adem.DTOresponse.ImageSavedResponse;
 import com.adem.DTOresponse.Response;
 import com.adem.DTOresponse.ResponseMessage;
-import com.adem.domain.Image;
+import com.adem.domain.ImageData;
 import com.adem.service.ImageService;
 
 import jakarta.transaction.Transactional;
@@ -49,22 +49,22 @@ public class ImageController {
 
 	public ResponseEntity<byte[]> downloadFile(@PathVariable String id) {
 
-		Image imageFile = imageService.getImageById(id);
+		ImageData imageFile = imageService.getImageById(id);
 
 		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + imageFile.getName())
-				.body(imageFile.getImageData().getData());
+				.body(imageFile.getImageFile().getData());
 	}
 
 	// ***********************Image Display*************************
 	@Transactional
 	@GetMapping("/display/{id}")
 	public ResponseEntity<byte[]> getImage(@PathVariable String id) throws IOException {
-		Image image = imageService.getImageById(id);
+		ImageData image = imageService.getImageById(id);
 		// header bilgisine MediaType bilgisini giriyorum
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(MediaType.IMAGE_PNG);
 
-		return new ResponseEntity<>(image.getImageData().getData(), header, HttpStatus.OK);
+		return new ResponseEntity<>(image.getImageFile().getData(), header, HttpStatus.OK);
 	}
 
 	// *************************GetAllimages*******************

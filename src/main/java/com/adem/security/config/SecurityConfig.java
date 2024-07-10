@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -28,6 +29,7 @@ import com.adem.security.jwt.AuthTokenFilter;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@EnableTransactionManagement
 public class SecurityConfig {
 	
 	@Autowired

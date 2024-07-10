@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.context.annotation.Lazy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,9 +35,8 @@ public class UserService {
 
 	private JwtUtils jwtUtils;
 	
-	private UserService userService;
-
-	public UserService(UserRepository userRepository,UserMapper userMapper, @Lazy UserService userService,
+	@Autowired
+	public UserService(UserRepository userRepository,UserMapper userMapper,
 			RoleService roleService, PasswordEncoder passwordEncoder, JwtUtils jwtUtils) {
 
 		this.userRepository = userRepository;
@@ -45,7 +44,6 @@ public class UserService {
 		this.roleService = roleService;
 		this.passwordEncoder = passwordEncoder;
 		this.jwtUtils = jwtUtils;
-		this.userService = userService;
 		
 
 	}
@@ -116,7 +114,7 @@ public class UserService {
 
 	//--------------update user-------------------
 	public void updateUser(UpdateUserRequest updateUserRequest) {
-		User user=userService.getCurrentUser();
+		User user=getCurrentUser();
 
 		if ((user == null)) {
 			new ResourceNotFoundException(String.format(ErrorMessage.EMAIL_IS_NOT_MATCH));

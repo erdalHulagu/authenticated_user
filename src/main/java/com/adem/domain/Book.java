@@ -37,7 +37,7 @@ public class Book {
 	private String contentOfBook;
 	
 	@Column(nullable = true)
-	private Set<Image> imageOfBook;
+	private Set<ImageData> imageOfBook;
 	
 
 	@ManyToMany
